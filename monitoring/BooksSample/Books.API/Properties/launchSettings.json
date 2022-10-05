@@ -1,0 +1,14 @@
+{
+  "profiles": {
+    "Books.API": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "launchUrl": "weatherforecast",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "http://localhost:5011"
+    }
+  },
+  "$schema": "http://json.schemastore.org/launchsettings.json"
+}

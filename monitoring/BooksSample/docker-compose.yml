@@ -1,0 +1,28 @@
+version: '3.4'
+
+services:
+  app:
+    image: ${DOCKER_REGISTRY-}booksapp
+    build:
+      context: .
+      dockerfile: Books.App/Dockerfile
+    links:
+      - "api"
+    depends_on:
+      - api
+      - grafana
+  api:
+    image: ${DOCKER_REGISTRY-}booksapi
+    build:
+      context: .
+      dockerfile: Books.API/Dockerfile
+    depends_on:
+      - grafana
+  grafana:
+    image: grafana/grafana-oss:latest
+    
+ # prometheus:
+ #   image: prom/prometheus
+
+
+
