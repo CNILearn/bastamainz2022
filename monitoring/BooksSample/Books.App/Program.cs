@@ -2,6 +2,11 @@
 using Books.App;
 
 var builder = WebApplication.CreateBuilder(args);
+bool isRunningInContainer = Environment.GetEnvironmentVariable("DOTNET_RUNNING_IN_CONTAINER") == "true";
+if (isRunningInContainer)
+{
+    builder.Configuration.AddJsonFile("appsettings.Docker.json");
+}
 
 builder.Services.AddRazorPages();
 builder.Services.AddHttpClient<BooksClient>(client =>

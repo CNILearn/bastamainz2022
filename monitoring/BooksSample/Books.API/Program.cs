@@ -1,8 +1,6 @@
 using Books.API;
 using Books.API.Services;
 
-using Microsoft.AspNetCore.Http.HttpResults;
-
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
