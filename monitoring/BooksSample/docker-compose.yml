@@ -13,3 +13,5 @@ services:
     build:
       context: .
       dockerfile: Books.API/Dockerfile
+  grafana:
+    image: grafana/grafana-oss

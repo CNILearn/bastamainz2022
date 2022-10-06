@@ -1,0 +1,16 @@
+{
+  "profiles": {
+    "Docker Compose": {
+      "commandName": "DockerCompose",
+      "commandVersion": "1.0",
+      "composeLaunchAction": "LaunchBrowser",
+      "composeLaunchServiceName": "books.app",
+      "composeLaunchUrl": "{Scheme}://localhost:{ServicePort}/{Scheme}://{ServiceHost}:{ServicePort}",
+      "serviceActions": {
+        "books.api": "StartDebugging",
+        "books.app": "StartDebugging",
+        "grafana": "StartWithoutDebugging"
+      }
+    }
+  }
+}
