@@ -4,6 +4,10 @@ services:
   books.app:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - JAEGER_SERVICE_NAME=books_app
+      - JAEGER_AGENT_HOST=jaeger
+      - JAEGER_AGENT_PORT=6831     
+      - JAEGER_SAMPLER_MANAGER_HOST_PORT=jaeger:5778
     ports:
       - "80"
       
@@ -15,4 +19,14 @@ services:
   grafana:
     ports:
       - "3000"
+  jaeger:
+    ports:
+      - "5775/udp"
+      - "6831/udp"
+      - "6832/udp"
+      - "5778"
+      - "16686"
+      - "14268"
+      - "9411"
+      
       
