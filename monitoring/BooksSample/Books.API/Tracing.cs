@@ -5,7 +5,7 @@ using System.Diagnostics;
 
 namespace Books.API;
 
-public class Tracing
+internal class Tracing
 {
     public static TracerProvider? ConfigureTracing()
     {

@@ -1,16 +1,7 @@
 
 using Books.App;
 
-using OpenTelemetry;
-using OpenTelemetry.Trace;
-
-using var tracerProvider = Sdk.CreateTracerProviderBuilder()
-    .AddHttpClientInstrumentation()
-    .AddAspNetCoreInstrumentation()
-    .AddSource("Books.App")
-    .AddJaegerExporter()
-    .AddConsoleExporter()
-    .Build();
+using var tracerProvider = Tracing.ConfigureTracing();
 
 var builder = WebApplication.CreateBuilder(args);
 bool isRunningInContainer = Environment.GetEnvironmentVariable("DOTNET_RUNNING_IN_CONTAINER") == "true";
