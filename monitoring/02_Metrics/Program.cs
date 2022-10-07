@@ -1,16 +1,13 @@
 ﻿global using Microsoft.Extensions.Logging;
 
-global using System.Diagnostics;
-
 using DiagnosticsSample;
 
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Configuration;
 
 using System.Text.Json;
-using Microsoft.EntityFrameworkCore;
-using System.Diagnostics.Metrics;
 
 
 
@@ -25,7 +22,7 @@ using var host = Host.CreateDefaultBuilder(args)
     })
     .ConfigureServices((context, services) =>
     {
-        string connectionString = context.Configuration.GetConnectionString("BooksConnection");
+        string connectionString = context.Configuration.GetConnectionString("BooksConnection") ?? throw new InvalidOperationException("Missing BooksConnection");
         services.AddDbContextFactory<BooksContext>(options =>
         {
             options.UseSqlServer(connectionString);

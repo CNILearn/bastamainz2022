@@ -17,8 +17,6 @@ public class Runner
     {
         _logger = logger;
         _contextFactory = contextFactory;
-
-
     }
     
     public void InfoMessage1()

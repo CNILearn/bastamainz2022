@@ -22,7 +22,7 @@ using var host = Host.CreateDefaultBuilder(args)
     })
     .ConfigureServices((context, services) =>
     {
-        string connectionString = context.Configuration.GetConnectionString("BooksConnection");
+        string connectionString = context.Configuration.GetConnectionString("BooksConnection") ?? throw new InvalidOperationException("Missing BooksConnection from configuration");
         services.AddDbContextFactory<BooksContext>(options =>
         {
             options.UseSqlServer(connectionString);

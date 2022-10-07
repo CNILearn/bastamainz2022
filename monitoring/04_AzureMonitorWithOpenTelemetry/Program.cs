@@ -2,19 +2,18 @@
 
 global using System.Diagnostics;
 
+using Azure.Monitor.OpenTelemetry.Exporter;
+
 using DiagnosticsSample;
 
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Configuration;
 
-using System.Text.Json;
-using Microsoft.EntityFrameworkCore;
-using System.Diagnostics.Metrics;
 using OpenTelemetry;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
-using Azure.Monitor.OpenTelemetry.Exporter;
 
 
 
@@ -33,7 +32,7 @@ using var host = Host.CreateDefaultBuilder(args)
     })
     .ConfigureServices((context, services) =>
     {
-        string connectionString = context.Configuration.GetConnectionString("BooksConnection");
+        string connectionString = context.Configuration.GetConnectionString("BooksConnection") ?? throw new InvalidOperationException("Connection string not found");
         services.AddDbContextFactory<BooksContext>(options =>
         {
             options.UseSqlServer(connectionString);
@@ -54,7 +53,7 @@ using var tracerProvider = Sdk.CreateTracerProviderBuilder()
     .AddAzureMonitorTraceExporter(o =>
     {
         IConfiguration settings = host.Services.GetRequiredService<IConfiguration>();
-        string connectionString = settings["AppInsightsConnectionString"];
+        string connectionString = settings["AppInsightsConnectionString"] ?? throw new InvalidOperationException("AppInsightsConnectionString not found");
         o.ConnectionString = connectionString;
     })
     .Build();
