@@ -1,6 +1,8 @@
 using Books.API;
 using Books.API.Services;
 
+using var tracerProvider = Tracing.ConfigureTracing();
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
@@ -12,10 +14,14 @@ var app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI();
 
-app.MapGet("/api/books", (BooksService booksService) =>
+app.MapGet("/api/books", (HttpContext context, BooksService booksService) =>
 {
+    using var activity = Tracing.StartGetBooksActivity(context.Request);
+    
     var books = booksService.GetBooks();
 
+    Tracing.CompleteGetBooks(activity);
+    
     return Results.Ok(books);
 });
 
