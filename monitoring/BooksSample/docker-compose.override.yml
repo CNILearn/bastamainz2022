@@ -14,19 +14,25 @@ services:
   books.api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - JAEGER_SERVICE_NAME=books_api
+      - JAEGER_AGENT_HOST=jaeger
+      - JAEGER_AGENT_PORT=6831     
+      - JAEGER_SAMPLER_MANAGER_HOST_PORT=jaeger:5778
     ports:
       - "80"
+
   grafana:
     ports:
       - "3000"
+
   jaeger:
     ports:
-      - "5775/udp"
-      - "6831/udp"
-      - "6832/udp"
-      - "5778"
-      - "16686"
-      - "14268"
-      - "9411"
-      
+      # - "5775/udp" # agent, for legacy clients only
+      - "6831/udp" # agent, jaeger thrift protocol
+      - "6832/udp" # agent, jaeger thrift protocol
+      - "5778" # agent, config
+      - "16686" # query, frontend
+      - "14268" # collector, jaeger thrift from clients
+      # - "14250" # collector, model.proto
+      # - "9411" # collector, zipkin compatible
       
