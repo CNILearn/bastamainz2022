@@ -1,9 +1,15 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using System.Text;
 
-ProcessXml("""
-    <books>
-    </books>
-    """)
+// UTF8 string literal
+
+ReadOnlySpan<byte> mystring = "Bücher"u8;
+byte[] array = "my string"u8.ToArray();
+
+
+Console.WriteLine(Encoding.UTF8.GetString(mystring));
+
+// raw string literal
 
 ProcessXml("""
     <books>
@@ -72,23 +78,23 @@ string json1 = $$"""
     };
     """;
 
+ProcessJson(json1);
 
-    ProcessJson($$"""
-    {
-        "book": {
-            "title": "{{title}}",
-            "publisher": "Wiley"
-        }
-    };
-    """);
-}
+
+ProcessJson($$"""
+{
+    "book": {
+        "title": "{{title}}",
+        "publisher": "Wiley"
+    }
+};
 """);
 
-    
+
 
 void ProcessXml([StringSyntax(StringSyntaxAttribute.Xml)] string xml)
 {
-    Console.WriteLine(xml) ;
+    Console.WriteLine(xml);
     Console.WriteLine();
 }
 
