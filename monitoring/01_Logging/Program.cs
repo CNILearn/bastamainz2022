@@ -1,23 +1,21 @@
 ﻿global using Microsoft.Extensions.Logging;
 
-global using System.Diagnostics;
-
 using DiagnosticsSample;
 
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Configuration;
 
 using System.Text.Json;
-using Microsoft.EntityFrameworkCore;
 
 using var host = Host.CreateDefaultBuilder(args)
     .ConfigureLogging(logging =>
     {
-        //logging.AddJsonConsole(config =>
-        //{
-        //    config.JsonWriterOptions = new JsonWriterOptions() { Indented = true };
-        //});
+        logging.AddJsonConsole(config =>
+        {
+            config.JsonWriterOptions = new JsonWriterOptions() { Indented = true };
+        });
         logging.SetMinimumLevel(LogLevel.Trace);
     })
     .ConfigureServices((context, services) =>

@@ -9,8 +9,6 @@ using Microsoft.Extensions.Hosting;
 
 using System.Text.Json;
 
-
-
 using var host = Host.CreateDefaultBuilder(args)
     .ConfigureLogging(logging =>
     {

@@ -15,7 +15,8 @@ using OpenTelemetry;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 
-
+const string ServiceName = "DiagnosticsSample";
+const string ServiceVersion = "1.0";
 
 using var host = Host.CreateDefaultBuilder(args)
     .ConfigureAppConfiguration(config =>
@@ -37,6 +38,22 @@ using var host = Host.CreateDefaultBuilder(args)
         {
             options.UseSqlServer(connectionString);
         });
+        services.AddOpenTelemetryTracing(builder =>
+        {
+            builder.AddConsoleExporter()
+            .AddSource(ServiceName)
+            .SetResourceBuilder(
+                ResourceBuilder.CreateDefault().AddService(ServiceName, ServiceVersion))
+            .AddHttpClientInstrumentation()
+            .AddAspNetCoreInstrumentation()
+            .AddSqlClientInstrumentation()
+            .AddAzureMonitorTraceExporter(options =>
+            {
+                IConfiguration settings = context.Configuration;
+                string connectionString = settings["AppInsightsConnectionString"] ?? throw new InvalidOperationException("AppInsightsConnectionString not found");
+                options.ConnectionString = connectionString;
+            });
+        });
         services.AddTransient<Runner>();
     })
     .Build();
@@ -46,17 +63,6 @@ Dictionary<string, object> resourceAttributes = new() {
     { "service.namespace", "my-diagnosticssample-namespace" },
     { "service.instance.id", "my-diagnosticssample-instance" }};
 var resourceBuilder = ResourceBuilder.CreateDefault().AddAttributes(resourceAttributes);
-
-using var tracerProvider = Sdk.CreateTracerProviderBuilder()
-    .SetResourceBuilder(resourceBuilder)
-    .AddSource("DiagnosticsSample")
-    .AddAzureMonitorTraceExporter(o =>
-    {
-        IConfiguration settings = host.Services.GetRequiredService<IConfiguration>();
-        string connectionString = settings["AppInsightsConnectionString"] ?? throw new InvalidOperationException("AppInsightsConnectionString not found");
-        o.ConnectionString = connectionString;
-    })
-    .Build();
 
 var runner = host.Services.GetRequiredService<Runner>();
 
