@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "LibraryImportSample": {
+      "commandName": "Project",
+      "commandLineArgs": "one two"
+    },
+    "WSL": {
+      "commandName": "WSL2",
+      "distributionName": ""
+    }
+  }
+}
