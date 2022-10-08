@@ -2,6 +2,11 @@
 
 ProcessXml("""
     <books>
+    </books>
+    """)
+
+ProcessXml("""
+    <books>
         <book isbn="3443874">
             <title>Professional C#</title>
         </book>
@@ -30,7 +35,7 @@ string s3 = $"""
             <title>{title}</title>
         </book>
     </books>
-""";
+    """;
 
 Console.WriteLine(s3);
 Console.WriteLine();
@@ -44,6 +49,15 @@ public void Main()
     Console.WriteLine($"This is so cool {hello}");
 }
 """;
+
+
+
+ProcessCSharp("""
+    void Foo()
+    {
+        Console.WriteLine(""Hello World"");
+    }
+    """);
 
 Console.WriteLine(code1);
 Console.WriteLine();
@@ -69,6 +83,8 @@ string json1 = $$"""
     """);
 }
 """);
+
+    
 
 void ProcessXml([StringSyntax(StringSyntaxAttribute.Xml)] string xml)
 {
