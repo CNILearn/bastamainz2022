@@ -9,7 +9,6 @@ PropertyPatternSample();
 
 ListPatternSample();
 
-
 void TypePatternSample()
 {
     static string TypePattern(object? o) =>
@@ -49,8 +48,6 @@ void PatternWithLogicalOperator()
     Console.WriteLine(LogicalOperators(p2));
     Console.WriteLine();
 }
-
-
 
 async Task TuplesPatternSampleAsync()
 {
@@ -130,8 +127,6 @@ public enum TrafficLight
     Amber,
     Green
 }
-
-
 
 public record Book(string Title, string Publisher);
 
