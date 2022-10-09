@@ -10,7 +10,6 @@ Translation<double> tr2 = new(2.2, 3.3);
 Point<double> pt4 = pt3 + tr2;
 Console.WriteLine(pt4);
 
-
 public record struct Translation<T>(T XOffset, T YOffset)
     : IAdditiveIdentity<Translation<T>, Translation<T>>
     where T : IAdditionOperators<T, T, T>, IAdditiveIdentity<T, T>
