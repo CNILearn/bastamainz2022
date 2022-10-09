@@ -6,18 +6,19 @@ using System.Text;
 ReadOnlySpan<byte> mystring = "Bücher"u8;
 byte[] array = "my string"u8.ToArray();
 
-
 Console.WriteLine(Encoding.UTF8.GetString(mystring));
 
-// raw string literal
+// raw string literals
 
-ProcessXml("""
+string s1 = """
     <books>
         <book isbn="3443874">
             <title>Professional C#</title>
         </book>
     </books>
-    """);
+    """;
+
+Console.WriteLine(s1);
 
 // keep indentation
 string s2 = """
@@ -56,8 +57,6 @@ public void Main()
 }
 """;
 
-
-
 ProcessCSharp("""
     void Foo()
     {
@@ -89,8 +88,6 @@ ProcessJson($$"""
     }
 };
 """);
-
-
 
 void ProcessXml([StringSyntax(StringSyntaxAttribute.Xml)] string xml)
 {
