@@ -1,10 +1,19 @@
 ﻿using System.Numerics;
 
-var result = AddAll1(new[] { 1, 2, 3, 4, 5, 6, 7, 8, 9 });
+int[] list1 = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+double[] list2 = { 1, 2, 3, 4.4, 5, 6, 7, 8, 9 };
+
+var result = AddAll1(list1);
 Console.WriteLine(result);
 
-var result2 = AddAll2(new double[] { 1, 2, 3, 4.8, 5, 6, 7, 8, 9 });
+var result2 = AddAll2(list2);
 Console.WriteLine(result2);
+
+var result3 = AddAll3(list2);
+Console.WriteLine(result3);
+
+var result4 = AddAll4(list2.AsSpan());
+Console.WriteLine(result4);
 
 int AddAll1(int[] values)
 {
