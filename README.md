@@ -18,3 +18,11 @@ C# 11 und .NET 7 stehen vor der Tür - das Release kommt im November 2022. Diese
 ## Links
 
 [My C# blog](https://csharp.christiannagel.com)
+
+[Professional C# Source Code](https://github.com/ProfessionalCSharp/ProfessionalCSharp2021)
+
+[GitHub - LibraryImportGenerator](https://github.com/dotnet/runtime/tree/main/docs/design/libraries/LibraryImportGenerator)
+
+[Carl Fanklin's Native AOT Test](https://github.com/carlfranklin/Native-AOT-Test)
+
+[Native AOT Deployment](https://learn.microsoft.com/dotnet/core/deploying/native-aot/?WT.mc_id=DT-MVP-10160)
