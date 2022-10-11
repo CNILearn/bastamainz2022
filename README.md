@@ -15,6 +15,20 @@ C# 11 und .NET 7 stehen vor der Tür - das Release kommt im November 2022. Diese
 * LibraryImport source generator
 * Regex source generator
 
+## Monitoring und Logging mit .NET Applications und Microsoft Azure
+
+[Slides](slides/Logging.pdf)
+
+Beim Einsatz von Microservices ist es wichtig, auch über den aktuellen Zustand der Services bescheid zu wissen. In dieser Session lernen Sie, wie Logging, Telemetriedaten, und Metrics-Daten in .NET-Applikationen implementiert werden können - inklusive dem OpenTelemetry-Standard für das Sammeln von plattformunabhängiger Kommunikation. Sie sehen auch, wie Sie diese Daten mit Microsoft Azure auswerten können.
+
+### [Samples](monitoring)
+
+* Logging
+* Metrics
+* Distributed Tracing
+* OpenTelemetry
+* Books Sample
+
 ## Links
 
 [My C# blog](https://csharp.christiannagel.com)
