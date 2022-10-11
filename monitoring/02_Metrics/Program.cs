@@ -36,7 +36,7 @@ for (int i = 0; i < 200; i++)
     runner.InfoMessage1();
     runner.InfoMessage2();
     runner.ErrorMessage();
-    await Task.Delay(2000);
+    await Task.Delay(200);
     runner.Foo();
     runner.AddARecord();
 }
