@@ -1,8 +1,6 @@
 using Books.API;
 using Books.API.Services;
 
-using var tracerProvider = Tracing.ConfigureTracing();
-
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
@@ -10,6 +8,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<BooksService>();
 
 var app = builder.Build();
+
+using var tracerProvider = Tracing.ConfigureTracing(builder.Configuration);
 
 app.UseSwagger();
 app.UseSwaggerUI();

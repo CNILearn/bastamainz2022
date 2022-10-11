@@ -1,8 +1,6 @@
 
 using Books.App;
 
-using var tracerProvider = Tracing.ConfigureTracing();
-
 var builder = WebApplication.CreateBuilder(args);
 bool isRunningInContainer = Environment.GetEnvironmentVariable("DOTNET_RUNNING_IN_CONTAINER") == "true";
 if (isRunningInContainer)
@@ -17,6 +15,9 @@ builder.Services.AddHttpClient<BooksClient>(client =>
 });
 
 var app = builder.Build();
+
+using var tracerProvider = Tracing.ConfigureTracing(builder.Configuration);
+
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error");

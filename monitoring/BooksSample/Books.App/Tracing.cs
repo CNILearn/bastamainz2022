@@ -1,4 +1,6 @@
-﻿using OpenTelemetry;
+﻿using Azure.Monitor.OpenTelemetry.Exporter;
+
+using OpenTelemetry;
 using OpenTelemetry.Trace;
 
 using System.Diagnostics;
@@ -7,14 +9,18 @@ namespace Books.App;
 
 internal class Tracing
 {
-    public static TracerProvider? ConfigureTracing()
+    public static TracerProvider? ConfigureTracing(IConfiguration settings)
     {
         return Sdk.CreateTracerProviderBuilder()
             .AddHttpClientInstrumentation()
             .AddAspNetCoreInstrumentation()
             .AddSource("Books.App")
-            .AddJaegerExporter()
             .AddConsoleExporter()
+            .AddAzureMonitorTraceExporter(options =>
+            {
+                string connectionString = settings["AppInsightsConnectionString"] ?? throw new InvalidOperationException("AppInsightsConnectionString not found");
+                options.ConnectionString = connectionString;
+            })
             .Build();
     }
 
