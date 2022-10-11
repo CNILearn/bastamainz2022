@@ -9,23 +9,15 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-using OpenTelemetry;
-using OpenTelemetry.Resources;
-using OpenTelemetry.Trace;
-
-using var tracerProvider = Sdk.CreateTracerProviderBuilder()
-    .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("DiagnosticsSample"))
-    .AddSource("DiagnosticsSample")
-    .AddConsoleExporter()
-    .Build();
+using System.Text.Json;
 
 using var host = Host.CreateDefaultBuilder(args)
     .ConfigureLogging(logging =>
     {
-        //logging.AddJsonConsole(config =>
-        //{
-        //    config.JsonWriterOptions = new JsonWriterOptions() { Indented = true };
-        //});
+        logging.AddJsonConsole(config =>
+        {
+            config.JsonWriterOptions = new JsonWriterOptions() { Indented = true };
+        });
         logging.SetMinimumLevel(LogLevel.Trace);
     })
     .ConfigureServices((context, services) =>

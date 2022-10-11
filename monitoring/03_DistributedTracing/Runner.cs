@@ -6,7 +6,7 @@ namespace DiagnosticsSample;
 
 public class Runner
 {
-    public static readonly ActivitySource activitySource = new("DiagnosticsSample", "1.0");
+    public static readonly ActivitySource ActivitySource = new("DiagnosticsSample", "1.0");
     static readonly Meter s_meter = new("DiagnosticsSample", "1.0.0");
     private static int s_observableFooValue = 0;
     static readonly ObservableCounter<int> s_observableFooCounter = s_meter.CreateObservableCounter("foo-counter2", () => s_observableFooValue);
@@ -14,6 +14,8 @@ public class Runner
     static readonly Counter<int> s_fooCounter = s_meter.CreateCounter<int>("foo-counter", "foos", "the number of foos started");
     static readonly Counter<int> s_errors = s_meter.CreateCounter<int>("error-counter", "errors", "the number of errors");
 
+    private readonly ActivityListener _listener;
+    
     private readonly ILogger _logger;
     private readonly IDbContextFactory<BooksContext> _contextFactory;
     
@@ -21,6 +23,28 @@ public class Runner
     {
         _logger = logger;
         _contextFactory = contextFactory;
+        //Activity.CurrentChanged += (sender, e) =>
+        //{
+        //    Console.WriteLine(".NET 7 new feature! Activity.Current changed");
+        //};
+
+        _listener = new ActivityListener
+        {
+            ShouldListenTo = _ => true,
+            SampleUsingParentId = (ref ActivityCreationOptions<string> activityOptions) => ActivitySamplingResult.AllData,
+            Sample = (ref ActivityCreationOptions<ActivityContext> activityOptions) => ActivitySamplingResult.AllData,
+            ActivityStarted = (action) =>
+                Console.WriteLine($"++started {action.Id} {action.DisplayName} {action.ParentId}"),
+            ActivityStopped = (action) => Console.WriteLine($"++stopped {action.Id} {action.DisplayName} {action.ParentId}")            
+        };
+
+        ActivitySource.AddActivityListener(_listener);
+
+        var _ = Task.Run(async () =>
+        {
+            await Task.Delay(2000);
+
+        });
     }    
 
     public void InfoMessage1()
@@ -44,7 +68,7 @@ public class Runner
         _logger.LogInformation("foo");
         s_fooCounter.Add(1);
 
-        using var fooActivity = activitySource.StartActivity("Foo", ActivityKind.Internal);
+        using var fooActivity = ActivitySource.StartActivity("Foo", ActivityKind.Internal);
         fooActivity?.AddEvent(new ActivityEvent("inFoo***"));
         fooActivity?.AddBaggage("bag1", "foobag");
         fooActivity?.AddTag("tag1", "footag");
@@ -57,7 +81,7 @@ public class Runner
 
     private void Bar()
     {
-        using var barActivity = activitySource.StartActivity("Bar", ActivityKind.Internal);
+        using var barActivity = ActivitySource.StartActivity("Bar", ActivityKind.Internal);
         barActivity?.AddTag("tag2", "bartag");
         _logger.LogInformation("Bar");
         barActivity?.Stop();
