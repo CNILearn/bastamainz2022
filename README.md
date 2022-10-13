@@ -52,3 +52,7 @@ Beim Einsatz von Microservices ist es wichtig, auch über den aktuellen Zustand 
 [.NET Monitor .NET 6 Announcement](https://devblogs.microsoft.com/dotnet/announcing-dotnet-monitor-in-net-6?WT.mc_id=DT-MVP-10160)
 
 [.NET Monitor](https://learn.microsoft.com/en-us/dotnet/core/diagnostics/dotnet-monitor?WT.mc_id=DT-MVP-10160)
+
+[Managing personal data in Log Analytics and Application Insights](https://learn.microsoft.com/en-us/azure/azure-monitor/logs/personal-data-mgmt?WT.mc_id=DT-MVP-10160)
+
+[Service Trust Portal](https://servicetrust.microsoft.com?WT.mc_id=DT-MVP-10160)
